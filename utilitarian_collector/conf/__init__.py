@@ -1,8 +1,8 @@
 import importlib
 import os
 
-from dlms_cosem.conf import global_settings
-from dlms_cosem.exceptions import ImproperlyConfigured
+from utilitarian_collector.conf import global_settings
+from utilitarian_collector.exceptions import ImproperlyConfigured
 
 ENVIRONMENT_VARIABLE = "SETTINGS_MODULE"
 

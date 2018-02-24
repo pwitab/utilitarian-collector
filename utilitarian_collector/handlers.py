@@ -1,6 +1,7 @@
-from dlms_cosem.conf import settings
 from dlms_cosem.dlms import apdu_factory
-from dlms_cosem.utils.module_loading import import_string
+
+from utilitarian_collector.conf import settings
+from utilitarian_collector.utils.module_loading import import_string
 
 
 class BaseDLMSHandler:
@@ -34,6 +35,8 @@ class BaseDLMSHandler:
 
         self._meter_system_title = self._apdu.system_title
 
+        print(self._meter_system_title)
+
         for meter_manager in self._meter_managers:
             meter_manager.process_data(self)
 
@@ -66,6 +69,8 @@ class BaseDLMSHandler:
             manager_instance = manager()
 
             self._meter_managers.append(manager_instance)
+
+            # TODO: Verify that module has process_data function.
 
         for protection_managers_path in settings.PROTECTION_MANAGERS:
 
