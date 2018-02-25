@@ -1,3 +1,4 @@
+import argparse
 import socket
 
 import os
@@ -13,9 +14,19 @@ def execute_from_cli(argv=None):
 
     #TODO: handle args so it is easy to set up on different addres and port!
 
+    parser = argparse.ArgumentParser(description='Supply Server Setting')
+    parser.add_argument('--host', default='localhost',
+                        help='Supply the address to bind the server to')
+    parser.add_argument('--port', type=int, default=4059,
+                        help='Supply the port to bind the server to')
+    parser.add_argument('--async', action='store_true', default=True,
+                        help='Say if the server is to be async')
+
+    args = parser.parse_args(argv)
+
 
     try:
-        run('127.0.0.1', 4059, threading=True)
+        run(args.host, args.port, threading=args.async)
 
     except socket.error as e:
         # Use helpful error messages instead of ugly tracebacks.
