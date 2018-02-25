@@ -25,19 +25,18 @@ class UDPRequestHandler(socketserver.BaseRequestHandler):
         )
         udp_wrapper = UDPWrapper.from_bytes(data)
         handler = self._amr_handler_cls(udp_wrapper.dlms_data)
+        handler.add_source_info(self.client_address[0], self.client_address[1])
         handler.process_data()
 
 
-def run(address, port, handler, server_cls, threading=False):
+def run(address, port, threading=False):
+    server_cls = socketserver.UDPServer
     server_address = (address, port)
 
     if threading:
-        print('Threaded server')
         amr_server_cls = type('AMRServer', (socketserver.ThreadingMixIn, server_cls), {})
     else:
         amr_server_cls = server_cls
-
-    print(amr_server_cls)
 
     server = amr_server_cls(server_address, UDPRequestHandler)
 

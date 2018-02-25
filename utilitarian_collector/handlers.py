@@ -10,6 +10,8 @@ class BaseDLMSHandler:
     _protection_managers = None
     _result_managers = None
 
+    _source_address = None
+    _source_port = None
     _raw_data = None
     _apdu = None
     _content = None
@@ -23,6 +25,10 @@ class BaseDLMSHandler:
         self.load_managers()
 
         self._raw_data = raw_data
+
+    def add_source_info(self, address, port):
+        self._source_address = address
+        self._source_port = port
 
     def process_data(self):
         """
