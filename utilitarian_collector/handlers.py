@@ -41,12 +41,10 @@ class BaseDLMSHandler:
 
         self._meter_system_title = self._apdu.system_title
 
-        print(self._meter_system_title)
-
         for meter_manager in self._meter_managers:
             meter_manager.process_data(self)
 
-        for protection_manager in self._meter_managers:
+        for protection_manager in self._protection_managers:
             protection_manager.process_data(self)
 
         result_list = list()

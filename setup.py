@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='utilitarian-collector',
@@ -13,7 +13,7 @@ setup(
             'utilitarian = utilitarian_collector.management:execute_from_cli',
     ]},
     license='BSD 3-Clause License',
-    packages=['utilitarian_collector'],
+    packages=find_packages(),
     install_requires=['dlms_cosem', ]
 
 )
