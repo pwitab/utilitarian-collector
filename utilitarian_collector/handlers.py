@@ -23,7 +23,6 @@ class BaseDLMSHandler:
 
     def __init__(self, raw_data):
         self.load_managers()
-
         self._raw_data = raw_data
 
     def add_source_info(self, address, port):

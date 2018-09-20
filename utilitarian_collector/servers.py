@@ -1,48 +1,37 @@
 import logging
 import socketserver
-import threading
 
-from dlms_cosem.wrappers import UDPWrapper
-
-from utilitarian_collector.handlers import BaseDLMSHandler
+from utilitarian_collector.conf import settings
+from utilitarian_collector.utils.module_loading import import_string
 
 logger = logging.getLogger(__name__)
 
 
-class UDPRequestHandler(socketserver.BaseRequestHandler):
-
-    _amr_handler_cls = BaseDLMSHandler
-
-    def handle(self):
-        data = self.request[0]
-        cur_thread = threading.current_thread()
-        print(
-            "Received Datagram in in thread {} from {}:{} :".format(
-                cur_thread.name,
-                self.client_address[0],
-                self.client_address[1],
-            )
-        )
-        udp_wrapper = UDPWrapper.from_bytes(data)
-        handler = self._amr_handler_cls(udp_wrapper.dlms_data)
-        handler.add_source_info(self.client_address[0], self.client_address[1])
-        handler.process_data()
-
-
 def run(address, port, threading=False):
-    server_cls = socketserver.UDPServer
+
+    server_cls = import_string(settings.SERVER_CLASS)
+    request_handler = import_string(settings.REQUEST_HANDLER)
     server_address = (address, port)
 
-    if threading:
-        amr_server_cls = type('AMRServer', (socketserver.ThreadingMixIn, server_cls), {})
+    if getattr(server_cls, 'use_asyncio'):
+        # Starting asyncIO servers
+        server = server_cls(server_address, request_handler)
+        print(f'Running {server.__class__}  on {address}:{port}')
+        server.serve_forever()
+
     else:
-        amr_server_cls = server_cls
 
-    server = amr_server_cls(server_address, UDPRequestHandler)
 
-    if threading:
-        server.daemon_threads = True
+        if threading:
+            amr_server_cls = type('AMRServer', (socketserver.ThreadingMixIn, server_cls), {})
+        else:
+            amr_server_cls = server_cls
 
-    print('Running server on {0}:{1}'.format(address, port))
-    server.serve_forever()
+        server = amr_server_cls(server_address, request_handler)
+
+        if threading:
+            server.daemon_threads = True
+
+        print(f'Running {server.__class__}  on {address}:{port}')
+        server.serve_forever()
 
