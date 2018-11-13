@@ -16,11 +16,8 @@ def run(address, port, threading=False):
     if getattr(server_cls, 'use_asyncio'):
         # Starting asyncIO servers
         server = server_cls(server_address, request_handler)
-        print(f'Running {server.__class__}  on {address}:{port}')
-        server.serve_forever()
 
     else:
-
 
         if threading:
             amr_server_cls = type('AMRServer', (socketserver.ThreadingMixIn, server_cls), {})
@@ -32,6 +29,6 @@ def run(address, port, threading=False):
         if threading:
             server.daemon_threads = True
 
-        print(f'Running {server.__class__}  on {address}:{port}')
-        server.serve_forever()
+    print(f'Running {server.__class__}  on {address}:{port}')
+    server.serve_forever()
 
