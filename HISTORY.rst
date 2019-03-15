@@ -28,3 +28,15 @@ Fixed
 Security
 ^^^^^^^^
 
+
+v0.0.2
+------
+
+Added
+^^^^^
+ - Default logging settings
+
+Removed
+^^^^^^^
+ - Direct DLMS usage. Should be defined in project using the framework
+

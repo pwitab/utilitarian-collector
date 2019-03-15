@@ -18,7 +18,6 @@ REQUIRES_PYTHON = '>=3.6'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'dlms_cosem',
 ]
 
 # What packages are optional?
@@ -75,7 +74,7 @@ with open('HISTORY.rst') as history_file:
 
 setup(
     name=NAME,
-    version='0.0.1',
+    version='0.0.2',
     python_requires=REQUIRES_PYTHON,
     description=DESCRIPTION,
     long_description=readme + '\n\n' + history,
