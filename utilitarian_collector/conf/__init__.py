@@ -12,7 +12,10 @@ class Settings:
     Class for storing all application settings. Inspired by Django settings
     """
 
-    def __init__(self, ):
+    def __init__(self):
+        pass
+
+    def configure(self):
         settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
 
         if not settings_module:

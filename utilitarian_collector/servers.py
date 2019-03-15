@@ -29,6 +29,6 @@ def run(address, port, threading=False):
         if threading:
             server.daemon_threads = True
 
-    print(f'Running {server.__class__}  on {address}:{port}')
+    print(f'Running {server}  on {address}:{port}')
     server.serve_forever()
 

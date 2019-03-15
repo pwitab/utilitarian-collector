@@ -9,6 +9,8 @@ import errno
 
 
 from utilitarian_collector.servers import run
+from utilitarian_collector.conf import settings
+from utilitarian_collector.utils.log import configure_logging
 
 
 def execute_from_cli(argv=None):
@@ -24,6 +26,10 @@ def execute_from_cli(argv=None):
                         help='Say if the server is to be async')
 
     args = parser.parse_args(argv)
+
+    settings.configure()
+
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
 
     try:
         run(args.host, args.port, threading=args.async)

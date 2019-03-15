@@ -10,6 +10,7 @@ Unreleased
 
 Added
 ^^^^^
+ - Default logging settings
 
 Changed
 ^^^^^^^
@@ -19,6 +20,7 @@ Deprecated
 
 Removed
 ^^^^^^^
+ - Direct DLMS usage. Should be defined in project using the framework
 
 Fixed
 ^^^^^
